@@ -4,14 +4,12 @@ import ts from "@wessberg/rollup-plugin-ts";
 import paths from "rollup-plugin-ts-paths";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import json from "@rollup/plugin-json";
-import serve from "rollup-plugin-serve";
-import livereload from "rollup-plugin-livereload";
 import { keys, mapValues, upperFirst, camelCase, template } from "lodash";
 import pkg from "./package.json";
 
 const { main, dependencies, module, unpkg, browser } = pkg;
-const formatModule = name => upperFirst(camelCase(name.indexOf("@") !== -1 ? name.split("/")[1] : name));
-const yearRange = date => (new Date().getFullYear() === +date ? date : `${date} - ${new Date().getFullYear()}`);
+const formatModule = (name) => upperFirst(camelCase(name.indexOf("@") !== -1 ? name.split("/")[1] : name));
+const yearRange = (date) => (new Date().getFullYear() === +date ? date : `${date} - ${new Date().getFullYear()}`);
 const year = yearRange(pkg.since || new Date().getFullYear());
 const external = keys(dependencies || {});
 const globals = mapValues(dependencies || {}, (value, key) => formatModule(key));
@@ -30,7 +28,7 @@ const outputs = [
   { format: "cjs", file: main },
   { format: "umd", file: unpkg },
   { format: "esm", file: module },
-  { format: "iife", file: browser }
+  { format: "iife", file: browser },
 ];
 
 export default {
@@ -42,27 +40,11 @@ export default {
     format,
     globals,
     name,
-    banner
+    banner,
   })),
   external,
   watch: {
-    include: [
-      "src/**/*"
-    ]
+    include: ["src/**/*"],
   },
-  plugins: [
-    sourcemaps(),
-    paths(),
-    commonjs(),
-    nodeResolve(),
-    json({ compact: true }),
-    ts({ tsconfig: "tsconfig.build.json" }),
-    ...(process.env.NODE_ENV !== "production" ? [
-      serve({
-        contentBase: ["public", "."],
-        historyApiFallback: "public/index.html"
-      }),
-      livereload({ watch: ["dist", "public"] })
-    ] : [])
-  ]
+  plugins: [sourcemaps(), paths(), commonjs(), nodeResolve(), json({ compact: true }), ts({ tsconfig: "tsconfig.build.json" })],
 };
