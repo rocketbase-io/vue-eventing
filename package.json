@@ -89,7 +89,5 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "vue": "^3.0.0-beta.20"
-  }
+  "dependencies": {}
 }
