@@ -89,5 +89,13 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocketbase-io/vue-eventing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rocketbase-io/vue-eventing/issues"
+  },
+  "homepage": "https://github.com/rocketbase-io/vue-eventing#readme"
 }
